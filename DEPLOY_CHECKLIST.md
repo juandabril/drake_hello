@@ -1,4 +1,4 @@
-# Deploy Checklist (GitHub + Streamlit Community Cloud)
+    # Deploy Checklist (GitHub + Streamlit Community Cloud)
 
 ## 1) Local sanity check
 

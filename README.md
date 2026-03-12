@@ -1,54 +1,57 @@
-# Drake Hello: Robotics ReX Playground (Streamlit + Meshcat)
+# Drake Hello: ReX Robotics Playground (Streamlit + Meshcat)
 
-Proyecto orientado a **simulación robótica para de- & remanufacturing (ReX)** con:
+## ES | Español
+Proyecto para simulación robótica de **de- & remanufacturing (ReX)** con:
 
-- **Streamlit** para dashboards interactivos y benchmarking.
-- **Meshcat (Drake)** para animación 3D en tiempo real.
-- **Escenarios con incertidumbre, seguridad humano-robot, y control adaptive vs baseline**.
+- **Streamlit** para dashboard interactivo y benchmarking.
+- **Meshcat (Drake)** para visualización 3D en tiempo real.
+- Escenarios con incertidumbre, seguridad humano-robot y políticas `adaptive` vs `baseline`.
 
-El objetivo es tener un repo listo para:
+Objetivo: repo listo para ejecutar localmente y desplegar en **Streamlit Community Cloud**.
 
-1. correr localmente en WSL/Linux, y  
-2. desplegar gratis en **Streamlit Community Cloud** con link público (`*.streamlit.app`).
+## EN | English
+This project is a robotics simulation playground for **de- & remanufacturing (ReX)** featuring:
 
----
+- **Streamlit** for interactive dashboards and benchmarking.
+- **Meshcat (Drake)** for real-time 3D visualization.
+- Uncertainty-aware scenarios, human-robot safety events, and `adaptive` vs `baseline` policies.
 
-## ¿Qué es Drake y por qué usarlo aquí?
-
-**Drake** es una librería de simulación y control para robótica.
-
-En este repo se usa para:
-
-- estructurar lógica de control por capas,
-- simular interacción en celda colaborativa,
-- visualizar y validar decisiones antes de pasar a hardware,
-- producir KPIs reproducibles para investigación/aplicación industrial.
-
-En resumen: permite pasar de una demo visual a una narrativa técnica sólida (robustez, mantenibilidad, reproducibilidad).
+Goal: a repository ready for local execution and **Streamlit Community Cloud** deployment.
 
 ---
 
-## Estructura del repo
+## ES | ¿Qué es Drake?
+**Drake** es una librería de simulación/control para robótica.  
+Aquí se usa para diseñar y validar lógica de control antes de pasar a hardware real.
+
+## EN | What is Drake?
+**Drake** is a robotics simulation/control library.  
+In this repo, it is used to design and validate control logic before hardware deployment.
+
+---
+
+## ES/EN | Repository Structure
 
 ```text
 drake_hello/
   drake_lab/
-    apps/         # Frontends (Streamlit / Meshcat runners)
-    scenarios/    # Motor de simulación y lógica de control
-    experiments/  # Benchmarks y comparación de políticas
-    core/         # Utilidades base
-  legacy/         # Versiones previas/single-file para trazabilidad
+    apps/         # UI and runners (Streamlit / Meshcat)
+    scenarios/    # Simulation engines and control logic
+    experiments/  # Benchmark pipelines
+    core/         # Shared utilities
+  legacy/         # Previous single-file versions (traceability)
   streamlit_app.py
   requirements.txt
   runtime.txt
+  DEPLOY_CHECKLIST.md
 ```
 
-- `streamlit_app.py` es el **entrypoint recomendado para cloud**.
-- `legacy/` conserva evolución histórica del proyecto.
+`streamlit_app.py` is the recommended cloud entrypoint.
 
 ---
 
-## Instalación local (WSL/Linux)
+## ES | Instalación local (WSL/Linux)
+## EN | Local setup (WSL/Linux)
 
 ```bash
 cd "/mnt/c/Users/juand/GitHub Projects/drake_hello"
@@ -60,89 +63,77 @@ pip install -r requirements.txt
 
 ---
 
-## Ejecutar demos principales
+## ES | Ejecutar demos principales
+## EN | Run main demos
 
-### 1) Dashboard interactivo (Streamlit)
-
+### Streamlit lab
 ```bash
 streamlit run streamlit_app.py
 ```
 
-### 2) Playground 3D en Meshcat (pick-sort colaborativo)
-
+### Meshcat real-time pick-sort demo
 ```bash
 python 9.topic_robot_pick_sort_meshcat.py --wait-for-enter
 ```
 
-### 3) Benchmark adaptive vs baseline (CSV + summary + plot)
-
+### Policy benchmark (CSV + summary + plot)
 ```bash
 python 8.topic_rex_policy_benchmark.py --samples 48 --start-seed 200
 ```
 
 ---
 
-## Comando de control rápido (ejemplo útil)
+## ES | Comandos de control rápidos
+## EN | Quick control commands
 
-Ejecutar política baseline para comparar contra adaptive:
-
+Baseline policy:
 ```bash
 python 9.topic_robot_pick_sort_meshcat.py --baseline --uncertainty-scale 1.4 --wait-for-enter
 ```
 
-Ejecutar política adaptive en condiciones difíciles:
-
+Adaptive policy under harder uncertainty:
 ```bash
 python 9.topic_robot_pick_sort_meshcat.py --uncertainty-scale 1.8 --wait-for-enter
 ```
 
-Esto te da una comparación directa de comportamiento y KPIs bajo incertidumbre.
-
 ---
 
-## Deploy a Streamlit Community Cloud (gratis)
+## ES | Deploy en Streamlit Community Cloud
+## EN | Deploy on Streamlit Community Cloud
 
-1. Sube este repo a GitHub (rama `main`).
-2. En Streamlit Community Cloud: **New app**.
-3. Selecciona:
-   - Repository: tu repo
+1. Push repo to GitHub (`main` branch).
+2. In Streamlit Cloud, create a new app.
+3. Select:
+   - Repository: `juandabril/drake_hello`
    - Branch: `main`
    - Main file path: `streamlit_app.py`
 4. Deploy.
 
-### Archivos clave para que funcione en cloud
-
-- `requirements.txt`: dependencias Python.
-- `runtime.txt`: fija versión compatible (`python-3.10.16`) para `drake`.
-
----
-
-## Troubleshooting
-
-### `ModuleNotFoundError: drake_lab`
-
-- Ejecuta desde la raíz del repo, no desde subcarpetas sueltas.
-
-### Meshcat no abre en `localhost`
-
-- Mantén el script corriendo (`--wait-for-enter`).
-- Prueba `http://127.0.0.1:7000`.
-
-### Error de deploy en Streamlit Cloud
-
-- Verifica que el repo esté publicado en GitHub.
-- Verifica `Main file path = streamlit_app.py`.
-- Revisa logs de build por versión de Python/dependencias.
+### Required files
+- `requirements.txt`
+- `runtime.txt` (`python-3.10.16` for Drake compatibility)
 
 ---
 
-## Objetivo técnico del proyecto
+## ES | Troubleshooting
+## EN | Troubleshooting
 
-Este repo está diseñado para mostrar capacidad en:
+- `ModuleNotFoundError: drake_lab`  
+  Run commands from repo root.
 
-- system design para celdas robóticas colaborativas,
-- task sequencing + adaptación online,
-- robustez bajo incertidumbre,
-- trazabilidad de resultados (CSV, summary, plots),
-- comunicación técnica clara (demo + evidencia cuantitativa).
+- Meshcat `localhost` not reachable  
+  Keep script alive (`--wait-for-enter`) and use `http://127.0.0.1:7000`.
+
+- Streamlit Cloud build issues  
+  Check Python runtime, dependencies, and main file path.
+
+---
+
+## ES | Valor técnico para investigación/aplicación
+## EN | Technical value for research/application
+
+- System design for collaborative robotic cells.
+- High-level sequencing + low-level adaptation.
+- Uncertainty robustness and reproducible KPI reporting.
+- Evidence-ready outputs (CSV, summaries, plots, demos).
 
