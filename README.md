@@ -61,6 +61,12 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Para demos completos con Drake + Meshcat (local):
+
+```bash
+pip install -r requirements-full.txt
+```
+
 ---
 
 ## ES | Ejecutar demos principales
@@ -113,6 +119,9 @@ python 9.topic_robot_pick_sort_meshcat.py --uncertainty-scale 1.8 --wait-for-ent
 - `requirements.txt`
 - `runtime.txt` (`python-3.10.16` for Drake compatibility)
 
+`requirements.txt` is intentionally minimal for cloud stability.  
+Use `requirements-full.txt` for full local Drake workflows.
+
 ---
 
 ## ES | Troubleshooting
@@ -136,4 +145,3 @@ python 9.topic_robot_pick_sort_meshcat.py --uncertainty-scale 1.8 --wait-for-ent
 - High-level sequencing + low-level adaptation.
 - Uncertainty robustness and reproducible KPI reporting.
 - Evidence-ready outputs (CSV, summaries, plots, demos).
-

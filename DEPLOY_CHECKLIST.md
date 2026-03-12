@@ -1,4 +1,4 @@
-    # Deploy Checklist (GitHub + Streamlit Community Cloud)
+# Deploy Checklist (GitHub + Streamlit Community Cloud)
 
 ## 1) Local sanity check
 
@@ -7,6 +7,12 @@ cd "/mnt/c/Users/juand/GitHub Projects/drake_hello"
 source .venv_wsl/bin/activate
 pip install -r requirements.txt
 streamlit run streamlit_app.py
+```
+
+Optional (full local setup including Drake + Meshcat):
+
+```bash
+pip install -r requirements-full.txt
 ```
 
 Verify:
@@ -72,4 +78,3 @@ On `*.streamlit.app` verify:
 - Benchmark runs (adaptive vs baseline).
 - Metrics table and plots render.
 - No crash after interaction.
-
